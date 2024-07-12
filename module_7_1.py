@@ -8,39 +8,35 @@ class Product:
         self.category = category
 
     def __str__(self):
-        return f'{self.name}, {self.weight}, {self.category}\n'
+        return f'{self.name}, {self.weight}, {self.category}'
 
 
 class Shop(Product):
-    __file_name = 'products.txt'
-
     def __init__(self):
-        pass
+        self.__file_name = 'products.txt'
 
     def get_products(self):
-        self.file = open(self.__file_name, 'r')
-        pprint(self.file.read())
-        self.file.close()
-        return
+        self.__file_name = 'products.txt'
+        file = open(self.__file_name, 'r')
+        prod = file.read()
+        file.close()
+        return prod
 
     def add(self, *products):
-        self.products = products
-        self.get_products()
-        for self.name in self.file:
-            if self.name not in self.file:
-                self.file = open(self.__file_name, 'a')
-                self.file.write(products)
-                self.file.close()
+        for product in products:
+            if product.name not in self.get_products():
+                file = open(self.__file_name, 'a')
+                file.write(product.__str__() + '\n')
             else:
-                print(f'Продукт {self.name} уже есть в магазине')
+                print(f'Продукт {product.name} уже есть в магазине')
 
 
 s1 = Shop()
-p1 = Product('Potato', 50.5, 'Vegetables')
+p1 = Product('Potato', 50.5, 'Vegitables')
 p2 = Product('Spaghetti', 3.4, 'Groceries')
 p3 = Product('Potato', 5.5, 'Vegetables')
-
-print(p2, p1, p3)
-
+s1.add(p1, p2, p3)
 s1.get_products()
-s1.add(p1)
+print(p1)
+print(p2)
+print(p3)
